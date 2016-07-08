@@ -6,11 +6,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import br.com.android.jhowcs.appconsultacep.bll.ConsultaCEP;
 import br.com.android.jhowcs.appconsultacep.bll.IConsultaCEPCallback;
 import br.com.android.jhowcs.appconsultacep.R;
 import br.com.android.jhowcs.appconsultacep.models.Cep;
 
 public class MainActivity extends AppCompatActivity implements IConsultaCEPCallback {
+    private ConsultaCEP consultaCEP;
+
     private EditText edtCEP;
     private Button btnConsultar;
 
@@ -32,13 +36,23 @@ public class MainActivity extends AppCompatActivity implements IConsultaCEPCallb
 
         btnConsultar    = (Button) findViewById(R.id.btnConsultar);
 
+        consultaCEP = new ConsultaCEP(this);
+
         btnConsultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String cep = edtCEP.getText().toString();
+
+                executarConsultaCEP(cep);
             }
         });
 
+    }
+
+    private void executarConsultaCEP(final String cep) {
+        if(cep.length() > 0) {
+            consultaCEP.executarConsultaCEP(cep);
+        }
     }
 
     @Override
